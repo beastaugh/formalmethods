@@ -25,10 +25,9 @@
 \newcommand{\defspace}[1]{\hspace{#1} &=_{df} \hspace{#1}}
 
 \title{Formal Methods Seminar 2012:\\
-       The completeness, compactness and\\
-       Löwenheim--Skolem theorems}
-\author{Kate Hodesdon and Benedict Eastaugh}
-\date{February 2nd and 9th, 2012}
+       The compactness and Löwenheim--Skolem theorems}
+\author{Benedict Eastaugh}
+\date{February 9th, 2012}
 
 \begin{document}
 
@@ -37,285 +36,49 @@
 First-order logic is a powerful and expressive system which has been used to
 formalise many basic systems of mathematics, including set theory, arithmetic,
 and the real closed field. It has been intensively studied since the early 20th
-century. Here we present the most basic and important metalogical results about
-first-order logic: the completeness, compactness and Löwenheim--Skolem
-theorems. They concern the relationship between truth and proof, techniques for
-constructing models of first-order theories and the expressive limitations of
-first-order logic.
-
-
-\section{First-order logic}
-
-\subsection{The language}
-
-Formal languages are in many ways like natural languages, albeit far simpler and
-much more regimented. The basic building block is an alphabet: a set of symbols
-which can be combined into formulae according to the rules of grammar.
-
-\subsubsection{The alphabet}
-
-The \emph{alphabet} of first-order logic consists of the following symbols:
-
-\begin{enumerate}
-    \item Variables: $v_1, v_2, v_3, \dotsc$
-    \item Constant symbols: $\mathbf{c_1}, \mathbf{c_2}, \mathbf{c_3}, \dotsc$
-    \item Function symbols: $f^1_1, f^1_2, \dotsc, f^1_k, f^2_1, \dotsc, f^n_k,
-        \dotsc$
-    \item Relation symbols: $R^1_1, R^1_2, \dotsc, R^1_k, R^2_1, \dotsc, R^n_k,
-        \dotsc$
-    \item Logical connectives: $\rightarrow$ and $\neg$
-    \item The universal quantifier: $\forall$
-    \item Punctuation: $($ and $)$ and $,$
-\end{enumerate}
-
-The subscripts serve to differentiate one symbol from another, while the
-superscripts on the function and relation symbols give their \emph{arity}, that
-is, how many arguments they accept. So $f^n$ is an $n$-ary function symbol and
-$P^n$ is an $n$-ary relation symbol. In arithmetic, the plus symbol $+$ is a
-2-ary (binary) function symbol, while the less-than symbol $<$ is a binary
-relation symbol.
-
-For convenience we usually use $a, b, c, x, y, z$ for variables; $\mathbf{a},
-\mathbf{b}, \mathbf{c}$ for constant symbols; $f, g, h$ for functions; and $P,
-Q, R$ for relation symbols. It should always be obvious from the context what
-type of symbol a particular letter is intended to be.
-
-We can divide the alphabet of first-order logic into two sorts. The variables,
-logical connectives, universal quantifier and punctuation symbols together form
-the \emph{logical symbols}, while the constant, function and relation symbols
-are \emph{non-logical symbols}. The importance of this distinction will become
-apparent when we discuss semantics.
-
-\begin{dfn}
-    \textbf{(Signature)}
-    A \emph{signature} is a set of non-logical symbols, that is, a set whose
-    elements are constant symbols, function symbols and relation symbols.
-\end{dfn}
-
-For example, the signature of first-order arithmetic contains symbols denoting
-the number zero; the successor, addition and multiplication functions; and the
-less-than relation: $\left\{ 0, S, +, \cdot, < \right\}$.\footnote{It also
-includes the 2-place relation symbol $=$ denoting identity, but we leave this
-implicit as in practice most formal systems include both the symbol for identity
-and axioms determining its use.}
-
-\subsubsection{The grammar}
-
-\begin{dfn}
-    \textbf{(Term)}
-    Suppose $\sigma$ is a signature. Then the \emph{terms} of $\sigma$ are as
-    follows:
-    
-    \begin{enumerate}
-        \item Every variable is a term of $\sigma$.
-        \item Every constant of $\sigma$ is a term of $\sigma$.
-        \item For $n > 0$, if $f^n$ is an $n$-ary function symbol of $\sigma$
-            and $t_1, \dotsc, t_n$ are terms of $\sigma$, $f(t_1, \dotsc, t_n)$
-            is a term of $\sigma$.
-    \end{enumerate}
-\end{dfn}
-
-\begin{dfn}
-    \textbf{(Atomic formula)}
-    Let $\sigma$ be a signature. If $n > 0$, $f^n$ is an $n$-ary relation symbol
-    of $\sigma$ and $t_1, \dotsc, t_n$ are terms of $\sigma$, then
-    $R(t_1, \dotsc, t_n)$ is an \emph{atomic formula} of $\sigma$.
-\end{dfn}
-
-\begin{dfn}
-    \textbf{(Well-formed formula)}
-    In general the following are \emph{well-formed formulae} or \emph{wffs}:
-    
-    \begin{enumerate}
-        \item Every atomic formula is a wff.
-        \item If $\varphi$ is a wff, then $\neg\varphi$ is a wff.
-        \item If $\varphi$ and $\psi$ are wffs, then $(\varphi \rightarrow
-            \psi)$ is a wff.
-        \item If $\varphi$ is a wff and $x$ is a variable, then $(\forall{x} \,
-            \varphi)$ is a wff.
-    \end{enumerate}
-    
-    If $\sigma$ is a signature then the \emph{$\sigma$-wffs} are those wffs
-    built up from the atomic formulae of $\sigma$. A \emph{language} $L$ of
-    signature $\sigma$ consists of the set of all $\sigma$-wffs.
-\end{dfn}
-
-(Free and bound variables.)
-
-\subsubsection{Abbreviations}
-
-The language described above is missing some of the symbols usually employed in
-first-order logic. However, we already have conceptual resources sufficient to
-define them. We will therefore employ the following abbreviations without
-further comment. For wffs $\varphi$ and $\psi$,
-
-\begin{align*}
-    (\varphi \vee \psi) \defspace{10pt} (\neg \varphi \rightarrow \psi) \\
-    (\varphi \wedge \psi) \defspace{10pt} \neg (\varphi \rightarrow \neg\psi) \\
-    (\varphi \leftrightarrow \psi) \defspace{10pt}
-        \neg (
-            (\varphi \rightarrow \psi)
-            \rightarrow
-            \neg (\psi \rightarrow \varphi)
-        ) \\
-    (\exists{x} \, \varphi) \defspace{10pt} \neg (\forall{x} \, \neg\varphi)
-\end{align*}
-
-For some signature $\sigma$ the first-order language of that signature, $L$, is
-the set of all $\sigma$-wffs.
-
-From now on we shall use the term `language' interchangeably with `signature'.
-The precise meaning should always be clear from the context in which it is used.
-For instance, ``Let $L$ be a first-order language'' should be taken to mean
-something like ``For a signature $\sigma$, let $L$ be the first-order language
-of that signature''.
-
-
-\subsection{Semantics}
-
-The semantics of classical first-order logic concerns how we interpret the
-formulae of the language---that is, what meaning we attach to $L$-wffs for some
-signature $L$. While the subject matter of different mathematical theories might
-seem very different, and require different languages, we can define a common
-framework for interpreting wffs of those languages. This is done by examining
-which structures make true or \emph{satisfy} those wffs.
-
-\begin{dfn}
-    A structure $A$ is an object
-    
-    Suppose $L$ is a signature. Then $A$ is an \emph{$L$-structure} if
-\end{dfn}
-
-
-\subsection{Proofs}
-
-Proofs have many equivalent formulations; we shall only discuss one.
-
-Under some circumstances, we are allowed to replace terms by variables, and vice
-versa. This is known as \emph{substitution}.
-
-\begin{dfn}
-    \textbf{(Substitution)}
-    Let $\varphi$ be a wff. Then $\varphi[t / x]$ is the wff that results from
-    substituting every occurrence of the variable $x$ in $\varphi$ with the term
-    $t$. We can define substitution formally as follows.
-    
-    \begin{enumerate}
-        \item If $\varphi$ is an atomic formula, replace the variable $x$ where
-            it occurs in $\varphi$ with the term $t$.
-        \item Replace $(\neg \varphi) [t / x]$ with $\neg (\varphi [t / x])$.
-        \item Replace $(\varphi \rightarrow \psi) [t / x]$ with $(\varphi[t / x]
-            \rightarrow \psi[t / x])$.
-        \item Replace $(\forall{y} \, \varphi) [t / x]$ with
-            $(\forall{y} \, \varphi)$ if $x = y$, and
-            $(\forall{y} \, \varphi[t / x])$ otherwise.
-    \end{enumerate}
-\end{dfn}
-
-Here are some examples of substitution:
-
-\begin{itemize}
-    \item $P(x, y)[t / x]$ becomes $P(t, y)$;
-    \item $(\neg R(x, y))[f(x) / y]$ becomes $\neg R(x, f(x))$;
-    \item $(P(x) \rightarrow Q(x)) [y / x]$ becomes
-        $(P(y) \rightarrow Q(y)) [y / x]$;
-    \item $\forall{y} (R(x, y)) [y / x]$ becomes $\forall{y} (R(y, y))$, while
-        $\forall{y} (R(x, y)) [x / y]$ is just $\forall{y} (R(x, y))$.
-\end{itemize}
-
-Renaming bound variables is also permitted, as long as it is done uniformly so
-as not to change the meaning of the formula. For example, $\forall{x} (P(x)
-\wedge Q(x))$ can be safely reformulated as $\forall{y} (P(y) \wedge Q(y))$, but
-not as $\forall{x} (P(z) \wedge Q(z))$ since this frees previously bound
-variables.
-
-\begin{dfn}
-    \textbf{(Logical axioms)}
-    The logical axioms of first-order logic are given in schematic form. For
-    every wff $\varphi$, $\psi$ and $\theta$, and every term $t$, every wff of
-    one of the following forms is a \emph{logical axiom}:
-    
-    \begin{itemize}
-        \item $(\varphi \rightarrow (\psi \rightarrow \varphi))$
-        \item $( (\varphi \rightarrow (\psi \rightarrow \theta))
-              \rightarrow
-              ( (\varphi \rightarrow \psi)
-                \rightarrow
-                (\varphi \rightarrow \theta) ) )$
-        \item $( (\neg\varphi \rightarrow \neg\psi)
-                 \rightarrow
-                 (\varphi \rightarrow \psi) )$
-        \item $(\forall{x} \, \varphi \rightarrow \varphi[t / x])$
-    \end{itemize}
-\end{dfn}
-
-\begin{dfn}
-    \textbf{(Proof)}
-    Suppose $L$ is a first-order language, $S$ a set of wffs in $L$, and $P =
-    \langle \varphi_1, \dotsc, \varphi_n \rangle$ a finite sequence of wffs of
-    length $n$. \emph{$P$ is a proof of $\varphi_n$ from $S$} if one of the
-    following conditions holds for each $\varphi_i$ in $P$:
-    
-    \begin{enumerate}
-        \item $\varphi_i$ is a sentence of $S$;
-        \item $\varphi_i$ is a logical axiom;
-        \item There are $j, k < i$ such that $\varphi_k$ is $\varphi_j
-              \rightarrow \varphi_i$;
-        \item There is $j < i$ such that $\varphi_i$ is $\forall{x}\varphi_j$,
-            $\langle \varphi_1, \dotsc, \varphi_j \rangle$ is a proof of
-            $\varphi_j$ from $S$, and $x$ does not appear free in any wff of
-            $S$.
-    \end{enumerate}
-\end{dfn}
-
-
-\section{The soundness and completeness of first-order logic}
-
-\subsection{Soundness}
-
-\begin{thm}
-    (Soundness) Let $S$ be a theory of signature $L$. If there is a proof from
-    $S$ to the $L$-sentence $\varphi$, then $\varphi$ is a logical (semantic)
-    consequence of $S$. Symbolically,
-    
-    \begin{displaymath}
-        S \vdash \varphi \Longrightarrow S \models \varphi.
-    \end{displaymath}
-\end{thm}
-
-\subsection{Completeness}
-
-Completeness is the converse of soundness.
-
-\begin{thm}
-    (Completeness) Let $S$ be a theory of signature $L$. If $S$ satisfies
-    $\varphi$, then $S$ proves $\varphi$. More formally,
-    
-    \begin{displaymath}
-        S \models \varphi \; \Longrightarrow \; S \vdash \varphi.
-    \end{displaymath}
-\end{thm}
-
-The completeness theorem can be reformulated as a model-existence principle.
-
-\begin{thm}
-    (Completeness, alternative version) Let $S$ be a set of wffs. If $S$ is
-    consistent, then $S$ is satisfiable.
-\end{thm}
+century. Here we present two of the most important metalogical results about
+first-order logic: the compactness and Löwenheim--Skolem theorems. Together
+they
 
 
 \section{The compactness theorem}
 
-Another model-existence theorem is the \emph{compactness theorem}.
-
 \begin{thm}
-    (Compactness) Let $S$ be a set of wffs. If every finite subset of $S$ has a
-    model, then $S$ has a model.
+    (Compactness) Let $S$ be a set of wffs of first-order logic. If every finite
+    subset of $S$ is satisfiable, then $S$ is satisfiable.
 \end{thm}
 
-Although the compactness theorem is easily derived from the completeness
-theorem, there are also purely model-theoretic proofs of the theorem---see for
-example \citet[pp. 125--127]{hodges1997}.
+A proof of the compactness theorem follows fairly directly from the
+\emph{completeness theorem} for first-order logic, that given some set $S$ of
+wffs of first-order logic and a wff $\varphi$, if $S \models \varphi$ then
+$S \vdash \varphi$.
+
+\begin{proof}
+    Consider the contraposition of compactness: if $S$ is not satisfiable, then
+    there is a finite subset of $S$ which is not satisfiable. So assume that $S$
+    is not satisfiable: there is no model $\mathcal{M}$ such that $\mathcal{M}
+    \models S$. We thus merely need to prove that there exists a finite subset
+    $S' \subseteq S$ such that $S'$ is not satisfiable.
+    
+    Recall the following reformulation of the completeness theorem: if $S$ is
+    consistent, then $S$ has a model. So if $S$ has no model then $S$ is
+    inconsistent. A set of wffs $S$ is inconsistent just in case there is some
+    wff $\psi$ such that $S \vdash \psi \wedge \neg\psi$. So consider a proof
+    which witnesses this statement,
+    
+    \begin{displaymath}
+        \Theta = \langle \theta_1, \dotsc, \theta_n \rangle
+    \end{displaymath}
+    
+    for $n \in \mathbb{N}$. Since $\Theta$ must be finitely long, only finitely
+    many $\theta_i$ can appear in it such that $\theta_i \in S$. So let $S'$ be
+    the set of wffs of $S$ which appear in $\Theta$. $S'$ must also be finite,
+    and of course $S' \vdash \psi \wedge \neg\psi$, so $S'$ is inconsistent, and
+    thus is a finite subset of $S$ which is not satisfiable.
+\end{proof}
+
+There are also purely model-theoretic proofs of the compactness theorem---see
+for example \citet[pp. 125--127]{hodges1997}.
 
 
 \section{The Löwenheim--Skolem theorem}
