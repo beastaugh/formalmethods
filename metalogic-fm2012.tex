@@ -37,25 +37,32 @@
 First-order logic is a powerful and expressive system which has been used to
 formalise many basic systems of mathematics, including set theory, arithmetic,
 and the real closed field. It has been intensively studied since the early 20th
-century. The most basic and important results are the completeness, compactness
-and Löwenheim--Skolem theorems.
+century. Here we present the most basic and important metalogical results about
+first-order logic: the completeness, compactness and Löwenheim--Skolem
+theorems. They concern the relationship between truth and proof, techniques for
+constructing models of first-order theories and the expressive limitations of
+first-order logic.
 
 
-\section{The language}
+\section{First-order logic}
+
+\subsection{The language}
 
 Formal languages are in many ways like natural languages, albeit far simpler and
 much more regimented. The basic building block is an alphabet: a set of symbols
 which can be combined into formulae according to the rules of grammar.
 
-\subsection{The alphabet}
+\subsubsection{The alphabet}
 
-The \emph{alphabet} of first order logic consists of the following symbols:
+The \emph{alphabet} of first-order logic consists of the following symbols:
 
 \begin{enumerate}
     \item Variables: $v_1, v_2, v_3, \dotsc$
     \item Constant symbols: $\mathbf{c_1}, \mathbf{c_2}, \mathbf{c_3}, \dotsc$
-    \item Function symbols: $f^1_1, f^1_2, \dotsc, f^1_k, f^2_1, \dotsc, f^n_k$
-    \item Relation symbols: $R^1_1, R^1_2, \dotsc, R^1_k, R^2_1, \dotsc, R^n_k$
+    \item Function symbols: $f^1_1, f^1_2, \dotsc, f^1_k, f^2_1, \dotsc, f^n_k,
+        \dotsc$
+    \item Relation symbols: $R^1_1, R^1_2, \dotsc, R^1_k, R^2_1, \dotsc, R^n_k,
+        \dotsc$
     \item Logical connectives: $\rightarrow$ and $\neg$
     \item The universal quantifier: $\forall$
     \item Punctuation: $($ and $)$ and $,$
@@ -73,7 +80,7 @@ For convenience we usually use $a, b, c, x, y, z$ for variables; $\mathbf{a},
 Q, R$ for relation symbols. It should always be obvious from the context what
 type of symbol a particular letter is intended to be.
 
-We can divide the alphabet of first order logic into two sorts. The variables,
+We can divide the alphabet of first-order logic into two sorts. The variables,
 logical connectives, universal quantifier and punctuation symbols together form
 the \emph{logical symbols}, while the constant, function and relation symbols
 are \emph{non-logical symbols}. The importance of this distinction will become
@@ -85,37 +92,60 @@ apparent when we discuss semantics.
     elements are constant symbols, function symbols and relation symbols.
 \end{dfn}
 
-For example, the signature of first order arithmetic contains symbols denoting
+For example, the signature of first-order arithmetic contains symbols denoting
 the number zero; the successor, addition and multiplication functions; and the
 less-than relation: $\left\{ 0, S, +, \cdot, < \right\}$.\footnote{It also
 includes the 2-place relation symbol $=$ denoting identity, but we leave this
 implicit as in practice most formal systems include both the symbol for identity
 and axioms determining its use.}
 
-\subsection{The grammar}
+\subsubsection{The grammar}
 
 \begin{dfn}
     \textbf{(Term)}
+    Suppose $\sigma$ is a signature. Then the \emph{terms} of $\sigma$ are as
+    follows:
+    
+    \begin{enumerate}
+        \item Every variable is a term of $\sigma$.
+        \item Every constant of $\sigma$ is a term of $\sigma$.
+        \item For $n > 0$, if $f^n$ is an $n$-ary function symbol of $\sigma$
+            and $t_1, \dotsc, t_n$ are terms of $\sigma$, $f(t_1, \dotsc, t_n)$
+            is a term of $\sigma$.
+    \end{enumerate}
 \end{dfn}
 
 \begin{dfn}
     \textbf{(Atomic formula)}
+    Let $\sigma$ be a signature. If $n > 0$, $f^n$ is an $n$-ary relation symbol
+    of $\sigma$ and $t_1, \dotsc, t_n$ are terms of $\sigma$, then
+    $R(t_1, \dotsc, t_n)$ is an \emph{atomic formula} of $\sigma$.
 \end{dfn}
 
 \begin{dfn}
     \textbf{(Well-formed formula)}
+    In general the following are \emph{well-formed formulae} or \emph{wffs}:
+    
+    \begin{enumerate}
+        \item Every atomic formula is a wff.
+        \item If $\varphi$ is a wff, then $\neg\varphi$ is a wff.
+        \item If $\varphi$ and $\psi$ are wffs, then $(\varphi \rightarrow
+            \psi)$ is a wff.
+        \item If $\varphi$ is a wff and $x$ is a variable, then $(\forall{x} \,
+            \varphi)$ is a wff.
+    \end{enumerate}
+    
+    If $\sigma$ is a signature then the \emph{$\sigma$-wffs} are those wffs
+    built up from the atomic formulae of $\sigma$. A \emph{language} $L$ of
+    signature $\sigma$ consists of the set of all $\sigma$-wffs.
 \end{dfn}
 
 (Free and bound variables.)
 
-\begin{dfn}
-    \textbf{($L$-wff)}
-\end{dfn}
-
-\subsection{Abbreviations}
+\subsubsection{Abbreviations}
 
 The language described above is missing some of the symbols usually employed in
-first order logic. However, we already have conceptual resources sufficient to
+first-order logic. However, we already have conceptual resources sufficient to
 define them. We will therefore employ the following abbreviations without
 further comment. For wffs $\varphi$ and $\psi$,
 
@@ -131,17 +161,19 @@ further comment. For wffs $\varphi$ and $\psi$,
     (\exists{x} \, \varphi) \defspace{10pt} \neg (\forall{x} \, \neg\varphi)
 \end{align*}
 
-We shall often use the term \emph{language} interchangeably with
-\emph{signature}; the precise meaning should always be clear from the context.
-Unless otherwise mentioned, all of our definitions, lemmas and theorems assume
-that any language mentioned is first order. For instance, a sentence like ``Let
-$L$ be a language and $A$ an $L$-structure'' should be interpreted as ``Let $L$
-be a first order signature and $A$ a structure with signature $L$''.
+For some signature $\sigma$ the first-order language of that signature, $L$, is
+the set of all $\sigma$-wffs.
+
+From now on we shall use the term `language' interchangeably with `signature'.
+The precise meaning should always be clear from the context in which it is used.
+For instance, ``Let $L$ be a first-order language'' should be taken to mean
+something like ``For a signature $\sigma$, let $L$ be the first-order language
+of that signature''.
 
 
-\section{Semantics}
+\subsection{Semantics}
 
-The semantics of classical first order logic concerns how we interpret the
+The semantics of classical first-order logic concerns how we interpret the
 formulae of the language---that is, what meaning we attach to $L$-wffs for some
 signature $L$. While the subject matter of different mathematical theories might
 seem very different, and require different languages, we can define a common
@@ -155,7 +187,7 @@ which structures make true or \emph{satisfy} those wffs.
 \end{dfn}
 
 
-\section{Proofs}
+\subsection{Proofs}
 
 Proofs have many equivalent formulations; we shall only discuss one.
 
@@ -191,9 +223,15 @@ Here are some examples of substitution:
         $\forall{y} (R(x, y)) [x / y]$ is just $\forall{y} (R(x, y))$.
 \end{itemize}
 
+Renaming bound variables is also permitted, as long as it is done uniformly so
+as not to change the meaning of the formula. For example, $\forall{x} (P(x)
+\wedge Q(x))$ can be safely reformulated as $\forall{y} (P(y) \wedge Q(y))$, but
+not as $\forall{x} (P(z) \wedge Q(z))$ since this frees previously bound
+variables.
+
 \begin{dfn}
     \textbf{(Logical axioms)}
-    The logical axioms of first order logic are given in schematic form. For
+    The logical axioms of first-order logic are given in schematic form. For
     every wff $\varphi$, $\psi$ and $\theta$, and every term $t$, every wff of
     one of the following forms is a \emph{logical axiom}:
     
@@ -213,7 +251,7 @@ Here are some examples of substitution:
 
 \begin{dfn}
     \textbf{(Proof)}
-    Suppose $L$ is a first order language, $S$ a set of wffs in $L$, and $P =
+    Suppose $L$ is a first-order language, $S$ a set of wffs in $L$, and $P =
     \langle \varphi_1, \dotsc, \varphi_n \rangle$ a finite sequence of wffs of
     length $n$. \emph{$P$ is a proof of $\varphi_n$ from $S$} if one of the
     following conditions holds for each $\varphi_i$ in $P$:
@@ -230,7 +268,8 @@ Here are some examples of substitution:
     \end{enumerate}
 \end{dfn}
 
-\section{Soundness and completeness}
+
+\section{The soundness and completeness of first-order logic}
 
 \subsection{Soundness}
 
@@ -264,12 +303,13 @@ The completeness theorem can be reformulated as a model-existence principle.
     consistent, then $S$ is satisfiable.
 \end{thm}
 
-\section{Compactness}
+
+\section{The compactness theorem}
 
 Another model-existence theorem is the \emph{compactness theorem}.
 
 \begin{thm}
-    (Compactness) Let $S$ be a theory. If every finite subtheory of $S$ has a
+    (Compactness) Let $S$ be a set of wffs. If every finite subset of $S$ has a
     model, then $S$ has a model.
 \end{thm}
 
@@ -279,6 +319,44 @@ example \citet[pp. 125--127]{hodges1997}.
 
 
 \section{The Löwenheim--Skolem theorem}
+
+From the compactness theorem we first learn about non-standard models:
+structures which satisfy a first-order theory $S$ and yet are not isomorphic to
+the intended interpretation. Non-standard models of arithmetic bring this out
+quite forcefully: these strange structures are nothing like we naïvely expect
+from a theory which seems, in its essentials, so transparent.
+
+The Löwenheim--Skolem theorem gives us a sense of quite how widespread this
+phenomenon is. Not only are there uncountable models of theories we think of as
+describing countable structures like the natural numbers, but there are even
+countable models of theories whose intended models are uncountable.
+
+This is perhaps most striking in the case of set theory. From the cumulative
+hierarchy picture of the set-theoretic universe, we would expect that any model
+of set theory would contain many transfinite cardinalities. The
+Löwenheim--Skolem theorem induces what Skolem called the ``relativity of set
+theory'': there are models of set theory which
+
+The languages we have discussed so far have all been \emph{countable}---that is,
+their formulae can be enumerated by assigning a unique natural number to each
+formula. However, it is often convenient to be able to add new non-logical
+symbols to a language---perhaps even uncountably many of them. Under some
+circumstances we thus need to pay heed to the \emph{cardinality} of a language:
+roughly speaking, how many different formulae it includes.
+
+\begin{dfn}
+    Two formulae are \emph{variants} of one another if they differ only in their
+    choice of variable names---that is, if one can be obtained from the other by
+    a uniform substitution of variables. $\varphi(x_1, \dotsc, x_n)$ is a
+    variant of $\varphi(y_1, \dotsc, y_n)$, and vice versa, while
+    $\forall{x} (P(x))$ is a variant of $\forall{y} (P(y))$.
+    
+    The \emph{cardinality} of a first-order language $L$, $|L|$, is the number
+    of equivalence classes of formulae of $L$ under the relation of being
+    variants. It's easy to see that the cardinality of the first-order language
+    with the empty signature (that is to say, containing no non-logical symbols)
+    is $\aleph_0$.
+\end{dfn}
 
 \begin{dfn}
     Elementary extensions and substructures.
@@ -291,7 +369,7 @@ Löwenheim--Skolem theorem}: that given any theory $S$ with an infinite model
 $A$, we can always expand the model to one of a higher cardinality.
 
 \begin{thm}
-    (Upwards Löwenheim--Skolem theorem) Let $L$ be a first order language with
+    (Upwards Löwenheim--Skolem theorem) Let $L$ be a first-order language with
     cardinality $\leq \lambda$, and let $A$ be an infinite $L$-structure with
     cardinality $\leq \lambda$. Then there exists an $L$-structure $B$ of
     cardinality $\lambda$ such that $B$ is an elementary extension of $A$.
@@ -300,7 +378,7 @@ $A$, we can always expand the model to one of a higher cardinality.
 \subsection{The downwards Löwenheim--Skolem theorem}
 
 \begin{thm}
-    (Downwards Löwenheim--Skolem theorem) Let $L$ be a first order language and
+    (Downwards Löwenheim--Skolem theorem) Let $L$ be a first-order language and
     let $A$ be an $L$-structure with $X \subseteq dom(A)$. Given some cardinal
     $\lambda$ such that $|L| + |X| \leq \lambda \leq |A|$, there exists an
     elementary substructure $B$ of $A$ with $|B| = \lambda$ and
