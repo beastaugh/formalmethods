@@ -37,8 +37,12 @@ First-order logic is a powerful and expressive system which has been used to
 formalise many basic systems of mathematics, including set theory, arithmetic,
 and the real closed field. It has been intensively studied since the early 20th
 century. Here we present two of the most important metalogical results about
-first-order logic: the compactness and Löwenheim--Skolem theorems. Together
-they
+first-order logic: the compactness and Löwenheim--Skolem theorems.
+
+As well as defining the notions required to state and prove these theorems, we
+shall examine some of their philosophical impact, which has made itself felt not
+only in logic and philosophy of mathematics but also in the philosophy of
+language.
 
 
 \section{The compactness theorem}
@@ -56,9 +60,9 @@ $S \vdash \varphi$.
 \begin{proof}
     Consider the contraposition of compactness: if $S$ is not satisfiable, then
     there is a finite subset of $S$ which is not satisfiable. So assume that $S$
-    is not satisfiable: there is no model $\mathcal{M}$ such that $\mathcal{M}
-    \models S$. We thus merely need to prove that there exists a finite subset
-    $S' \subseteq S$ such that $S'$ is not satisfiable.
+    is not satisfiable: there is no structure $A$ such that $A \models S$. We
+    thus merely need to prove that there exists a finite subset $S' \subseteq S$
+    such that $S'$ is not satisfiable.
     
     Recall the following reformulation of the completeness theorem: if $S$ is
     consistent, then $S$ has a model. So if $S$ has no model then $S$ is
@@ -79,6 +83,8 @@ $S \vdash \varphi$.
 
 There are also purely model-theoretic proofs of the compactness theorem---see
 for example \citet[pp. 125--127]{hodges1997}.
+
+(Applications of compactness: non-standard models of arithmetic.)
 
 
 \section{The Löwenheim--Skolem theorem}
@@ -118,24 +124,42 @@ roughly speaking, how many different formulae it includes.
     of equivalence classes of formulae of $L$ under the relation of being
     variants. It's easy to see that the cardinality of the first-order language
     with the empty signature (that is to say, containing no non-logical symbols)
-    is $\aleph_0$.
+    is $\aleph_0$, as there are only countably many symbols and the proceedure
+    for generating wffs is recursive.
 \end{dfn}
 
 \begin{dfn}
-    Elementary extensions and substructures.
+    Given a signature $L$ and two $L$-structures $A$ and $B$, we say that
+    $A$ is a \emph{substructure} of $B$ or that $B$ is an \emph{extension} of
+    $A$ if the following conditions hold:
+    
+    \begin{itemize}
+        \item $dom(A) \subseteq dom(B)$;
+        \item $f^A = f^B \restriction A^n$ for every $n$-ary function symbol $f$
+            in $L$;
+        \item $R^A = R^B \cap A^n$ for every $n$-ary relation symbol $R$
+            in $L$.
+    \end{itemize}
+    
+    Suppose the $L$-structures $A$ and $B$ are as above. Then $B$ is an
+    \emph{elementary extension} of $A$, or equivalently, $A$ is an
+    \emph{elementary substructure} of $B$, if the inclusion map $i : dom(A)
+    \rightarrow dom(B)$ is an elementary embedding. This further implies that
+    $A$ and $B$ are \emph{elementarily equivalent}: that both structures satisfy
+    the same first-order sentences.
 \end{dfn}
 
 \subsection{The upwards Löwenheim--Skolem theorem}
 
-One easy consequence of compactness is what is often called the \emph{upwards
+One consequence of compactness is what is often called the \emph{upwards
 Löwenheim--Skolem theorem}: that given any theory $S$ with an infinite model
 $A$, we can always expand the model to one of a higher cardinality.
 
 \begin{thm}
     (Upwards Löwenheim--Skolem theorem) Let $L$ be a first-order language with
-    cardinality $\leq \lambda$, and let $A$ be an infinite $L$-structure with
-    cardinality $\leq \lambda$. Then there exists an $L$-structure $B$ of
-    cardinality $\lambda$ such that $B$ is an elementary extension of $A$.
+    cardinality $\leq \kappa$, and let $A$ be an infinite $L$-structure with
+    cardinality $\leq \kappa$. Then there exists an $L$-structure $B$ of
+    cardinality $\kappa$ such that $B$ is an elementary extension of $A$.
 \end{thm}
 
 \subsection{The downwards Löwenheim--Skolem theorem}
@@ -143,11 +167,43 @@ $A$, we can always expand the model to one of a higher cardinality.
 \begin{thm}
     (Downwards Löwenheim--Skolem theorem) Let $L$ be a first-order language and
     let $A$ be an $L$-structure with $X \subseteq dom(A)$. Given some cardinal
-    $\lambda$ such that $|L| + |X| \leq \lambda \leq |A|$, there exists an
-    elementary substructure $B$ of $A$ with $|B| = \lambda$ and
+    $\kappa$ such that $|L| + |X| \leq \kappa \leq |A|$, there exists an
+    elementary substructure $B$ of $A$ with $|B| = \kappa$ and
     $X \subseteq dom(B)$.
 \end{thm}
 
+This result demonstrates that, in some sense, first-order logic is too weak to
+distinguish between different infinite cardinalities. For instance, if we take
+the cumulative hierarchy picture at face value then the axioms of ZFC appear to
+describe a structure containing many infinite ordinals and cardinals. This
+theorem says that there are many models of the ZFC axioms in which the higher
+reaches of the transfinite model do not appear---and indeed, that there are even
+\emph{countable} models of ZFC.
+
+This seems to fly in the face of the assertion---a theorem of ZFC---that an
+uncountable set exists, and the phenomenon is often known as \emph{Skolem's
+paradox}. Skolem held that this demonstrated the relativity of set-theoretic
+concepts.
+
+(Dissolving the paradox.)
+
+(Reference to Putnam, and responses to his view including Tim Bays's articles.)
+
+(Don't just obtain any old model, but an elementary substructure of the original
+model.)
+
+Combining the upward and downward parts of the theorem, we can see that in
+general, if a first-order theory $S$ has at least one infinite model, then it
+has models of every infinite cardinality.
+
+
+\section{Lindström's theorem}
+
+Compactness and the downward Löwenheim--Skolem theorem demonstrate two
+important properties of first-order logic. Lindström proved that first-order
+logic is maximal with respect to these properties: it is the strongest logic
+which has both the compactness property and the downwards Löwenheim--Skolem
+property.
 
 \bibliographystyle{abbrvnat}
 \bibliography{metalogic-fm2012}
