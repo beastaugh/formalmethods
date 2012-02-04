@@ -47,15 +47,13 @@ language.
 
 \section{The compactness theorem}
 
+The compactness theorem was originally proved by \citet{godel1930} as a
+corollary to his completeness theorem for first-order logic.
+
 \begin{thm}
     (Compactness) Let $S$ be a set of wffs of first-order logic. If every finite
     subset of $S$ is satisfiable, then $S$ is satisfiable.
 \end{thm}
-
-A proof of the compactness theorem follows fairly directly from the
-\emph{completeness theorem} for first-order logic, that given some set $S$ of
-wffs of first-order logic and a wff $\varphi$, if $S \models \varphi$ then
-$S \vdash \varphi$.
 
 \begin{proof}
     Consider the contraposition of compactness: if $S$ is not satisfiable, then
@@ -64,20 +62,21 @@ $S \vdash \varphi$.
     thus merely need to prove that there exists a finite subset $S' \subseteq S$
     such that $S'$ is not satisfiable.
     
-    Recall the following reformulation of the completeness theorem: if $S$ is
+    Recall the following formulation of the completeness theorem: if $S$ is
     consistent, then $S$ has a model. So if $S$ has no model then $S$ is
     inconsistent. A set of wffs $S$ is inconsistent just in case there is some
-    wff $\psi$ such that $S \vdash \psi \wedge \neg\psi$. So consider a proof
-    which witnesses this statement,
+    wff $\psi$ such that $S \vdash \psi \wedge \neg\psi$. Consider a proof
+    witnessing this statement,\footnote{The term `witness' means some arbitrary
+    object satisfying an existential assertion.}
     
     \begin{displaymath}
         \Theta = \langle \theta_1, \dotsc, \theta_n \rangle
     \end{displaymath}
     
     for $n \in \mathbb{N}$. Since $\Theta$ must be finitely long, only finitely
-    many $\theta_i$ can appear in it such that $\theta_i \in S$. So let $S'$ be
-    the set of wffs of $S$ which appear in $\Theta$. $S'$ must also be finite,
-    and of course $S' \vdash \psi \wedge \neg\psi$, so $S'$ is inconsistent, and
+    many $\theta_i$ can appear in it such that $\theta_i \in S$. Let $S'$ be the
+    set of wffs of $S$ which appear in $\Theta$. $S'$ must also be finite, and
+    of course $S' \vdash \psi \wedge \neg\psi$, so $S'$ is inconsistent, and
     thus is a finite subset of $S$ which is not satisfiable.
 \end{proof}
 
@@ -85,6 +84,9 @@ There are also purely model-theoretic proofs of the compactness theorem---see
 for example \citet[pp. 125--127]{hodges1997}.
 
 (Applications of compactness: non-standard models of arithmetic.)
+
+For further applications, see \citet{vdalen2004}; another excellent introductory
+text covering these topics is \citet{kaye2007}.
 
 
 \section{The Löwenheim--Skolem theorem}
