@@ -21,6 +21,8 @@
 \newtheorem{note}[thm]{Note}
 \theoremstyle{plain}
 \newtheorem{lem}[thm]{Lemma}
+\theoremstyle{plain}
+\newtheorem{cor}[thm]{Corollary}
 
 \newcommand{\defspace}[1]{\hspace{#1} &=_{df} \hspace{#1}}
 
@@ -66,8 +68,8 @@ corollary to his completeness theorem for first-order logic.
     consistent, then $S$ has a model. So if $S$ has no model then $S$ is
     inconsistent. A set of wffs $S$ is inconsistent just in case there is some
     wff $\psi$ such that $S \vdash \psi \wedge \neg\psi$. Consider a proof
-    witnessing this statement,\footnote{The term `witness' means some arbitrary
-    object satisfying an existential assertion.}
+    witnessing this statement,\footnote{The term `witness' means an object
+    satisfying an existential assertion.}
     
     \begin{displaymath}
         \Theta = \langle \theta_1, \dotsc, \theta_n \rangle
@@ -81,12 +83,18 @@ corollary to his completeness theorem for first-order logic.
 \end{proof}
 
 There are also purely model-theoretic proofs of the compactness theorem---see
-for example \citet[pp. 125--127]{hodges1997}.
+for example \citealt[pp. 125--127]{hodges1997}.
+
+\subsection{Applications of compactness}
+
+Compactness is an extremely useful property.
 
 (Applications of compactness: non-standard models of arithmetic.)
 
-For further applications, see \citet{vdalen2004}; another excellent introductory
-text covering these topics is \citet{kaye2007}.
+Compactness is also useful for proving that certain classes of structures are
+finitely axiomatisable. For details see \citealt[pp. 114--116]{vdalen2004}.
+The best-known application of compactness, however, is in proving the upward
+direction of the \emph{Löwenheim--Skolem theorem}.
 
 
 \section{The Löwenheim--Skolem theorem}
@@ -97,16 +105,25 @@ the intended interpretation. Non-standard models of arithmetic bring this out
 quite forcefully: these strange structures are nothing like we naïvely expect
 from a theory which seems, in its essentials, so transparent.
 
-The Löwenheim--Skolem theorem gives us a sense of quite how widespread this
-phenomenon is. Not only are there uncountable models of theories we think of as
-describing countable structures like the natural numbers, but there are even
-countable models of theories whose intended models are uncountable.
+One aspect of this is cardinality: we think of arithmetic as inherently
+describing a countable structure, and indeed our very notion of a set being
+countable is that it can be put into a one-to-one correspondence with the
+natural numbers. But not only are there uncountable models of first-order
+theories such as Peano Arithmetic, but there are arbitrarily large models of
+every first-order theory.
 
-This is perhaps most striking in the case of set theory. From the cumulative
-hierarchy picture of the set-theoretic universe, we would expect that any model
-of set theory would contain many transfinite cardinalities. The
-Löwenheim--Skolem theorem induces what Skolem called the ``relativity of set
-theory'': there are models of set theory which
+Perhaps even more surprisingly, no matter how large the intended model of a
+first-order theory is, it also has a countable model. This result was originally
+proved in 1915 by Leopold Löwenheim, and Thoralf Skolem provided a simpler and
+more general proof in 1920 \citep{lowenheim1915, skolem1920}.
+
+\subsection{Some model theory}
+
+In order to state the theorem in its full generality we need a few definitions
+from model theory, which allow us to characterise languages and structures in a
+more fine-grained way. By convention for a structure $A$ we add a superscript to
+denote an element, function or relation belonging to that structure. For
+instance, given a constant $c$ we would denote its referant in $A$ as $c^A$.
 
 The languages we have discussed so far have all been \emph{countable}---that is,
 their formulae can be enumerated by assigning a unique natural number to each
@@ -124,10 +141,32 @@ roughly speaking, how many different formulae it includes.
     
     The \emph{cardinality} of a first-order language $L$, $|L|$, is the number
     of equivalence classes of formulae of $L$ under the relation of being
-    variants. It's easy to see that the cardinality of the first-order language
-    with the empty signature (that is to say, containing no non-logical symbols)
-    is $\aleph_0$, as there are only countably many symbols and the proceedure
-    for generating wffs is recursive.
+    variants.
+\end{dfn}
+
+\begin{lem}
+    Let $L$ be a first-order langauge and let $\kappa$ be the number of
+    non-logical symbols of $L$. Then $|L| = \omega + \kappa =
+    max \left\{ \omega, \kappa \right\}$.
+\end{lem}
+
+\begin{proof}
+    Exercise.
+\end{proof}
+
+\begin{dfn}
+    Let $L$ be a first-order language and $A$ an $L$-structure. Then the
+    \emph{theory of $A$}, $Th(A)$, is the set of all sentences $\varphi$ of $L$
+    such that $A \models \varphi$. The \emph{elementary diagram of $A$},
+    $eldiag(A)$, is the set of sentences $\psi$ of $L$ with parameters from $A$
+    that are true in $A$.
+\end{dfn}
+
+\begin{dfn}
+    Suppose we have two signatures, $L^-$ and $L^+$, and that $L^- \subseteq
+    L^+$. Then if $A$ is an $L^+$ structure we can transform it into an
+    $L^-$-structure by `forgetting' the symbols of $L^+$ which don't appear in
+    $L^-$. This gives us the \emph{$L^-$-reduct of $A$}, $L^- | A$.
 \end{dfn}
 
 \begin{dfn}
@@ -143,60 +182,122 @@ roughly speaking, how many different formulae it includes.
             in $L$.
     \end{itemize}
     
-    Suppose the $L$-structures $A$ and $B$ are as above. Then $B$ is an
+    Suppose $A$ and $B$ are as above. If the inclusion map $i : dom(A)
+    \rightarrow dom(B)$ is an elementary embedding, then $B$ is an
     \emph{elementary extension} of $A$, or equivalently, $A$ is an
-    \emph{elementary substructure} of $B$, if the inclusion map $i : dom(A)
-    \rightarrow dom(B)$ is an elementary embedding. This further implies that
-    $A$ and $B$ are \emph{elementarily equivalent}: that both structures satisfy
-    the same first-order sentences.
+    \emph{elementary substructure} of $B$. This further implies that $A$ and $B$
+    are \emph{elementarily equivalent}: they satisfy the same first-order
+    sentences.
 \end{dfn}
+
+\begin{lem}
+    \label{eldiag_lem}
+    Let $L$ be a first-order language and $A$ an $L$-structure. If $B \models
+    eldiag(A)$, then there is an elementary embedding of $A$ into the reduct
+    $B | L$.
+\end{lem}
 
 \subsection{The upwards Löwenheim--Skolem theorem}
 
 One consequence of compactness is what is often called the \emph{upwards
 Löwenheim--Skolem theorem}: that given any theory $S$ with an infinite model
-$A$, we can always expand the model to one of a higher cardinality.
+$A$, we can always expand the model to one of a higher cardinality. The name is
+somewhat inappropriate, since as we shall see, Skolem rejected the existence of
+uncountable sets.
 
 \begin{thm}
+    \label{up_lst}
     (Upwards Löwenheim--Skolem theorem) Let $L$ be a first-order language with
-    cardinality $\leq \kappa$, and let $A$ be an infinite $L$-structure with
-    cardinality $\leq \kappa$. Then there exists an $L$-structure $B$ of
-    cardinality $\kappa$ such that $B$ is an elementary extension of $A$.
+    $|L| \leq \kappa$ and $A$ an infinite $L$-structure such that $|A| \leq
+    \kappa$. Then $A$ has an elementary extension of cardinality $\kappa$.
 \end{thm}
+
+\begin{proof}
+    Providing names for the elements of $A$ as necessary, let $T = eldiag(A)$.
+    Add new constants $c_i$ to $L$ for $i < \kappa$, obtaining the language
+    $L^*$. Let $S$ be the theory
+    
+    \begin{displaymath}
+        T \cup \left\{\ c_i \neq c_j\ |\ i, j < \kappa\ \right\}.
+    \end{displaymath}
+    
+    Pick an arbitrary finite $U \subseteq S$. Only finitely many of the new
+    constants $c_i$ occur in the sentences of $U$, and $A$ is infinite so we
+    simply assign each of the new constants to an element $c^A_i$ of $A$.
+    Clearly $A \models U$ so by compactness there is an $L^*$-structure $B$
+    satisfying $S$.
+    
+    $B \models eldiag(A)$, so by lemma \ref{eldiag_lem} there is an elementary
+    embedding $e : A \rightarrow B | L$. Elementary embeddings are injections,
+    so we can straightforwardly replace $e(x^A) = x^B$ in $B | L$ with $x^A$,
+    thus making $B | L$ an elementary extension of $A$.
+    
+    Since $B \models S$, for every pair of elements $c^B_i$ and $c^B_j$ with
+    $i, j < \kappa$, $c^B_i \neq c^B_j$, so the cardinality of $B | L$ is at
+    least $\kappa$. We can apply theorem \ref{down_lst} to reduce the
+    cardinality of $B | L$ to exactly $\kappa$.
+\end{proof}
 
 \subsection{The downwards Löwenheim--Skolem theorem}
 
 \begin{thm}
-    (Downwards Löwenheim--Skolem theorem) Let $L$ be a first-order language and
-    let $A$ be an $L$-structure with $X \subseteq dom(A)$. Given some cardinal
-    $\kappa$ such that $|L| + |X| \leq \kappa \leq |A|$, there exists an
-    elementary substructure $B$ of $A$ with $|B| = \kappa$ and
-    $X \subseteq dom(B)$.
+    \label{down_lst}
+    (Downwards Löwenheim--Skolem theorem) Let $L$ be a first-order language
+    and $A$ an $L$-structure such that $|L| \leq \kappa \leq |A|$. Then $A$
+    has an elementary substructure of cardinality $\kappa$.
 \end{thm}
 
-This result demonstrates that, in some sense, first-order logic is too weak to
-distinguish between different infinite cardinalities. For instance, if we take
-the cumulative hierarchy picture at face value then the axioms of ZFC appear to
-describe a structure containing many infinite ordinals and cardinals. This
-theorem says that there are many models of the ZFC axioms in which the higher
-reaches of the transfinite model do not appear---and indeed, that there are even
-\emph{countable} models of ZFC.
+\begin{proof}
+    Omitted, but see \citealt[pp. 69--72]{hodges1997}.
+\end{proof}
 
-This seems to fly in the face of the assertion---a theorem of ZFC---that an
-uncountable set exists, and the phenomenon is often known as \emph{Skolem's
-paradox}. Skolem held that this demonstrated the relativity of set-theoretic
-concepts.
+Combining the upward and downward parts of the theorem, we can see that in
+general, if a first-order theory $S$ has at least one infinite model, then it
+has models of every infinite cardinality. This result demonstrates that, in some
+sense, first-order logic is too weak to distinguish between different infinite
+cardinalities.
+
+If we take the cumulative hierarchy picture at face value then the axioms of ZFC
+appear to describe a structure containing many infinite ordinals and cardinals.
+The Löwenheim--Skolem theorem demonstrates that there are many models of ZFC in
+which the higher reaches of the transfinite model do not appear. There are even
+\emph{countable} models of ZFC. This seems to fly in the face of the assertion
+(a theorem of ZFC) that an uncountable set exists. This phenomenon is known as
+\emph{Skolem's paradox}.
+
+\subsection{Skolem's paradox}
+
+Skolem was a sceptic about the existence of uncountable sets, and he took the
+Löwenheim--Skolem theorem as evidence that his scepticism was justified and
+that set-theoretic concepts were inherently \emph{relative}.
+
+\begin{quote}
+    The relativity is due to the fact that to be an object in [a model] means
+    something different and far more restricted than merely to be in some way
+    definable. That this relativity must be inherently bound up with every
+    thoroughgoing axiomatization is clear; for it rests upon the general
+    theorems of mathematical logic mentioned above. In order to obtain something
+    absolutely nondenumerable, we would have to have either an absolutely
+    nondenumerably infinite number of axioms or an axiom that could yield an
+    absolutely nondenumerable number of first-order propositions. But this would
+    in all cases lead to a circular introduction of the higher infinities; that
+    is, \emph{on an axiomatic basis higher infinities exist only in a relative
+    sense}.
+    (Skolem 1922, reproduced in \citet[p. 296]{vanheijenoort})
+\end{quote}
+
+See \citet{jane2001} for more details.
 
 (Dissolving the paradox.)
+
+\subsection{Putnam's model-theoretic argument}
+
+The Löwenheim--Skolem theorem famously appears in an argument of Hilary Putnam.
 
 (Reference to Putnam, and responses to his view including Tim Bays's articles.)
 
 (Don't just obtain any old model, but an elementary substructure of the original
 model.)
-
-Combining the upward and downward parts of the theorem, we can see that in
-general, if a first-order theory $S$ has at least one infinite model, then it
-has models of every infinite cardinality.
 
 
 \section{Lindström's theorem}
@@ -206,6 +307,8 @@ important properties of first-order logic. Lindström proved that first-order
 logic is maximal with respect to these properties: it is the strongest logic
 which has both the compactness property and the downwards Löwenheim--Skolem
 property.
+
+See \citet{vaananen2010}.
 
 \bibliographystyle{abbrvnat}
 \bibliography{metalogic-fm2012}
