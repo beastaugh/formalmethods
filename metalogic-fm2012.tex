@@ -168,6 +168,17 @@ roughly speaking, how many different formulae it includes.
     $L^-$. This gives us the \emph{$L^-$-reduct of $A$}, $L^- | A$.
 \end{dfn}
 
+\begin{lem}
+    \label{eldiag_lem}
+    Let $L$ be a first-order language and $A$ an $L$-structure. If $B \models
+    eldiag(A)$, then there is an elementary embedding of $A$ into the reduct
+    $B | L$.
+\end{lem}
+
+\begin{proof}
+    See \citealt[p. 49]{hodges1997}.
+\end{proof}
+
 \begin{dfn}
     Given a signature $L$ and two $L$-structures $A$ and $B$, we say that
     $A$ is a \emph{substructure} of $B$ or that $B$ is an \emph{extension} of
@@ -188,17 +199,6 @@ roughly speaking, how many different formulae it includes.
     are \emph{elementarily equivalent}: they satisfy the same first-order
     sentences.
 \end{dfn}
-
-\begin{lem}
-    \label{eldiag_lem}
-    Let $L$ be a first-order language and $A$ an $L$-structure. If $B \models
-    eldiag(A)$, then there is an elementary embedding of $A$ into the reduct
-    $B | L$.
-\end{lem}
-
-\begin{proof}
-    See \citealt[p. 49]{hodges1997}.
-\end{proof}
 
 \subsection{The upwards Löwenheim--Skolem theorem}
 
