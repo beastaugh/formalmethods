@@ -52,9 +52,17 @@ language.
 The compactness theorem was originally proved by \citet{godel1930} as a
 corollary to his completeness theorem for first-order logic.
 
+\begin{lem}
+    \label{completeness}
+    (Completeness)
+    If $S$ is a consistent set of sentences then $S$ has a model.
+\end{lem}
+
 \begin{thm}
-    (Compactness) Let $S$ be a set of wffs of first-order logic. If every finite
-    subset of $S$ is satisfiable, then $S$ is satisfiable.
+    \label{compactness}
+    (Compactness)
+    Let $S$ be a set of wffs of first-order logic. If every finite subset of $S$
+    is satisfiable, then $S$ is satisfiable.
 \end{thm}
 
 \begin{proof}
@@ -64,10 +72,10 @@ corollary to his completeness theorem for first-order logic.
     thus merely need to prove that there exists a finite subset $S' \subseteq S$
     such that $S'$ is not satisfiable.
     
-    Recall the following formulation of the completeness theorem: if $S$ is
-    consistent, then $S$ has a model. So if $S$ has no model then $S$ is
-    inconsistent. A set of wffs $S$ is inconsistent just in case there is some
-    wff $\psi$ such that $S \vdash \psi \wedge \neg\psi$. Consider a proof
+    By lemma \ref{completeness}, if $S$ is consistent then $S$ has a model. So
+    if $S$ has no model then $S$ is inconsistent. For a theory to be
+    inconsistent is just for it to prove a contradiction---that is, there is
+    some wff $\psi$ such that $S \vdash \psi \wedge \neg\psi$. Consider a proof
     witnessing this statement,\footnote{The term `witness' means an object
     satisfying an existential assertion.}
     
@@ -87,7 +95,27 @@ for example \citealt[pp. 125--127]{hodges1997}.
 
 \subsection{Applications of compactness}
 
-\textbf{(TODO: Applications of compactness.)}
+The compactness theorem is a model-existence theorem: it says that \emph{given}
+that some condition holds, \emph{there exists a model} with certain properties.
+A simple application of the theorem is showing that given the consistency of
+some theory, non-standard models of that theory exists. This is easily seen in
+the case of arithmetic.
+
+\begin{lem}
+    There exists a model of first-order Peano Arithmetic, PA, which is not
+    isomorphic to the standard model.
+\end{lem}
+
+\begin{proof}
+    Add a new constant symbol $e$ to the language of arithmetic and for each
+    numeral $\bar{n}$ add the sentence $\bar{n} < e$ to the axioms of PA to
+    obtain the new theory $S$. Any finite $T \subseteq S$ is satisfied by the
+    usual natural number structure $\mathbb{N}$ by interpreting the constant $e$
+    as some number larger than any numeral employed in the sentences of $T$. So
+    by compactness, $S$ has a model $M$ which contains an element $e^M$ greater
+    than any standard natural number. As PA is a subtheory of $S$, $M$ is also a
+    model of PA.
+\end{proof}
 
 Compactness is also useful for proving that certain classes of structures are
 finitely axiomatisable; for details see \citealt[pp. 114--116]{vdalen2004}.
@@ -137,7 +165,9 @@ roughly speaking, how many different formulae it includes.
     a uniform substitution of variables. $\varphi(x_1, \dotsc, x_n)$ is a
     variant of $\varphi(y_1, \dotsc, y_n)$, and vice versa, while
     $\forall{x} (P(x))$ is a variant of $\forall{y} (P(y))$.
-    
+\end{dfn}
+
+\begin{dfn}
     The \emph{cardinality} of a first-order language $L$, $|L|$, is the number
     of equivalence classes of formulae of $L$ under the relation of being
     variants.
@@ -210,10 +240,10 @@ uncountable sets.
 
 \begin{thm}
     \label{up_lst}
-    (Upwards Löwenheim--Skolem theorem) Let $L$ be a first-order language, $A$
-    an infinite $L$-structure and $\kappa$ a cardinal such that $|L| \leq
-    \kappa$ and $\omega \leq |A| \leq \kappa$. Then $A$ has an elementary
-    extension of cardinality $\kappa$.
+    (Upwards Löwenheim--Skolem theorem)
+    Let $L$ be a first-order language, $A$ an infinite $L$-structure and
+    $\kappa$ a cardinal such that $|L| \leq \kappa$ and $|A| \leq \kappa$. Then
+    $A$ has an elementary extension of cardinality $\kappa$.
 \end{thm}
 
 \begin{proof}
@@ -246,10 +276,10 @@ uncountable sets.
 
 \begin{thm}
     \label{down_lst}
-    (Downwards Löwenheim--Skolem theorem) Let $L$ be a first-order language,
-    $A$ an $L$-structure and $\kappa$ an infinite cardinal such that $|L| \leq
-    \kappa \leq |A|$. Then $A$ has an elementary substructure of cardinality
-    $\kappa$.
+    (Downwards Löwenheim--Skolem theorem)
+    Let $L$ be a first-order language, $A$ an $L$-structure and $\kappa$ an
+    infinite cardinal such that $|L| \leq \kappa \leq |A|$. Then $A$ has an
+    elementary substructure of cardinality $\kappa$.
 \end{thm}
 
 \begin{proof}
