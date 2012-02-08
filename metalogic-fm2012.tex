@@ -188,19 +188,67 @@ roughly speaking, how many different formulae it includes.
 \begin{dfn}
     Let $L$ be a first-order language and $A$ an $L$-structure. Then the
     \emph{theory of $A$}, $Th(A)$, is the set of all sentences $\varphi$ of $L$
-    such that $A \models \varphi$. The \emph{elementary diagram of $A$},
-    $eldiag(A)$, is the set of sentences $\psi$ of $L$ (with parameters from
-    $A$) that are true in $A$.
+    such that $A \models \varphi$.
 \end{dfn}
 
 \begin{dfn}
     Suppose we have two signatures, $L^-$ and $L^+$, and that $L^- \subseteq
-    L^+$. Then if $A$ is an $L^+$ structure we can transform it into an
-    $L^-$-structure by `forgetting' the symbols of $L^+$ which don't appear in
-    $L^-$. This gives us the \emph{$L^-$-reduct of $A$}, $L^- | A$.
+    L^+$. Then if $A$ is an $L^+$-structure we can transform it into an
+    $L^-$-structure by forgetting the symbols of $L^+$ which don't appear in
+    $L^-$. This gives us the \emph{$L^-$-reduct} of $A$, $A| L^-$.
 \end{dfn}
 
 \subsubsection{Extensions and elementarity}
+
+We now look at the relations structures can bear to one another. These notions
+from model theory are common currency in logic and philosophy of mathematics,
+and worth learning for their own sake, but here we use them to prove stronger
+versions of our goal theorems.
+
+\begin{dfn}
+    Suppose $A$ and $B$ are $L$-structures. An \emph{embedding} $f$ from $A$
+    into $B$, $f : A \rightarrow B$, is a function $f$ from $dom(A)$ to $dom(B)$
+    obeying the following conditions.
+
+    \begin{enumerate}
+        \item $f$ is injective.
+        \item For each constant $c$ of $L$, $f(c^A) = c^B$.
+        \item For each $n > 0$ and each $n$-ary relation symbol $R$ of $L$ and
+              $n$-tuple $\bar{a}$ of elements of $A$, $\bar{a} \in R^A
+              \leftrightarrow f\bar{a} \in R^B$.
+        \item For each $n > 0$ and each $n$-ary function symbol $F$ of $L$ and
+              $n$-tuple $\bar{a}$ of elements of $A$, $f(F^A(\bar{a})) =
+              F(f\bar{a})$.
+    \end{enumerate}
+
+    (A note on notation: $f(\bar{a})$ just means the tuple $\langle f(a_1),
+    \dotsc, f(a_n) \rangle$).
+\end{dfn}
+
+\begin{dfn}
+    Given two $L$-structures $A$ and $B$ such that $dom(A) \subseteq dom(B)$, if
+    the inclusion map $i : dom(A) \rightarrow dom(B)$ is an embedding then we
+    say that $B$ is an \emph{extension} of $A$, or alternatively that $A$ is a
+    \emph{substructure} of $B$, $A \subseteq B$.
+\end{dfn}
+
+\begin{dfn}
+    If an embedding between $L$-structures $f : A \rightarrow B$ preserves
+    first-order formulae, $A \models \varphi(\bar{a}) \rightarrow B \models
+    \varphi(f\bar{a})$, then we say that $f$ is an \emph{elementary embedding}.
+
+    Suppose that $B$ is an extension of $A$. If the inclusion map is an
+    elementary embedding then $B$ is an \emph{elementary extension} of $A$, or
+    equivalently, $A$ is an \emph{elementary substructure} of $B$, $A
+    \preccurlyeq B$.
+\end{dfn}
+
+\begin{dfn}
+    \textbf{(Fix this.)}
+    The \emph{elementary diagram of $A$},
+       $eldiag(A)$, is the set of sentences $\psi$ of $L$ (with parameters from
+       $A$) that are true in $A$.
+\end{dfn}
 
 \begin{lem}
     \label{eldiag_lem}
@@ -212,27 +260,6 @@ roughly speaking, how many different formulae it includes.
 \begin{proof}
     See \citealt[p. 49]{hodges1997}.
 \end{proof}
-
-\begin{dfn}
-    Given a signature $L$ and two $L$-structures $A$ and $B$, we say that
-    $A$ is a \emph{substructure} of $B$ or that $B$ is an \emph{extension} of
-    $A$ if the following conditions hold:
-    
-    \begin{itemize}
-        \item $dom(A) \subseteq dom(B)$;
-        \item $f^A = f^B \restriction A^n$ for every $n$-ary function symbol $f$
-            in $L$;
-        \item $R^A = R^B \cap A^n$ for every $n$-ary relation symbol $R$
-            in $L$.
-    \end{itemize}
-    
-    Suppose $A$ and $B$ are as above. If the inclusion map $i : dom(A)
-    \rightarrow dom(B)$ is an elementary embedding, then $B$ is an
-    \emph{elementary extension} of $A$, or equivalently, $A$ is an
-    \emph{elementary substructure} of $B$. This further implies that $A$ and $B$
-    are \emph{elementarily equivalent}: they satisfy the same first-order
-    sentences.
-\end{dfn}
 
 \subsection{The upwards Löwenheim--Skolem theorem}
 
