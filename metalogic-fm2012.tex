@@ -208,6 +208,11 @@ from model theory are common currency in logic and philosophy of mathematics,
 and worth learning for their own sake, but here we use them to prove stronger
 versions of our goal theorems.
 
+We denote $n$-tuples of constants, variables and elements $\langle a_1, \dotsc,
+a_n \rangle$ as $\bar{c}$, $\bar{x}$, $\bar{a}$ and so on. In the case of a
+function applied to a tuple, $f\bar{a}$, we mean $\langle f(a_1), \dotsc, f(a_n)
+\rangle$.
+
 \begin{dfn}
     Suppose $A$ and $B$ are $L$-structures. An \emph{embedding} $f$ from $A$
     into $B$, $f : A \rightarrow B$, is a function $f$ from $dom(A)$ to $dom(B)$
@@ -223,9 +228,6 @@ versions of our goal theorems.
               $n$-tuple $\bar{a}$ of elements of $A$, $f(F^A(\bar{a})) =
               F(f\bar{a})$.
     \end{enumerate}
-    
-    (A note on notation: $f(\bar{a})$ just means the tuple $\langle f(a_1),
-    \dotsc, f(a_n) \rangle$).
 \end{dfn}
 
 \begin{dfn}
