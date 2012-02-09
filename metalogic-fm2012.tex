@@ -249,10 +249,14 @@ function applied to a tuple, $f\bar{a}$, we mean $\langle f(a_1), \dotsc, f(a_n)
 \end{dfn}
 
 \begin{dfn}
-    \textbf{(Fix this.)}
-    The \emph{elementary diagram of $A$},
-       $eldiag(A)$, is the set of sentences $\psi$ of $L$ (with parameters from
-       $A$) that are true in $A$.
+    Let $A$ be an $L$-structure and $\bar{a}$ be a sequence of all elements of
+    $A$. We choose a sequence $\bar{c}$ of new constants not in $L$ to name the
+    elements of $\bar{a}$. Adjoining these constants to $L$ gives us a new
+    language $L(\bar{c})$ and an $L(\bar{c})$-structure $(A, \bar{a})$ which is
+    just $A$ with the constants $\bar{c}$ interpreted as the constant elements
+    $\bar{a}$. Then the \emph{elementary diagram of $A$}, $eldiag(A)$, is
+    $Th(A, \bar{a})$. In other words, it's the set of sentences \emph{with
+    parameters from $A$} that are true in $A$.
 \end{dfn}
 
 \begin{lem}
