@@ -1,4 +1,4 @@
-Formal Methods Seminar: The compactness and Löwenheim--Skolem theorems
+Formal Methods Seminar: The compactness and Löwenheim–Skolem theorems
 ======================================================================
 
 The Philosophy department at the University of Bristol run a seminar for new
@@ -7,12 +7,12 @@ logic, as well as formal epistemology, decision theory, and other formal or
 mathematical techniques employed by philosophers.
 
 The files included here form my contribution to that seminar: a presentation of
-the compactness and Löwenheim--Skolem theorems, two of the fundamental results
+the compactness and Löwenheim–Skolem theorems, two of the fundamental results
 in model theory. The Munich Center for Mathematical Philosophy have made the
 [PDF version] available from the section of their website on [learning
 mathematical philosophy].
 
---- Benedict Eastaugh, February 2012
+— Benedict Eastaugh, February 2012
 
 [Formal Methods]:
   http://eis.bris.ac.uk/~rp3959/Richard_Pettigrews_homepage/Formal_Methods.html
