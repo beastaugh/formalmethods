@@ -58,15 +58,19 @@ language.
 The compactness theorem was originally proved by \citet{godel1930} as a
 corollary to his completeness theorem for first-order logic.
 
-\begin{lem}
-    \label{completeness}
-    (Completeness)
-    If $S$ is a consistent set of sentences then $S$ has a model.
+\begin{lem}[Model Existence Lemma]
+    \label{lem:model_existence}
+    Let $L$ be a first-order language. If $S$ is a consistent theory then $S$
+    has a model of cardinality $\kappa$, where $\kappa \leq |L|$.
 \end{lem}
 
-\begin{thm}
+\begin{thm}[Completeness Theorem]
+    \label{thm:completeness}
+    If $S$ is a consistent set of sentences then $S$ has a model.
+\end{thm}
+
+\begin{thm}[Compactness Theorem]
     \label{compactness}
-    (Compactness)
     Let $S$ be a set of wffs of first-order logic. If every finite subset of $S$
     is satisfiable, then $S$ is satisfiable.
 \end{thm}
@@ -78,8 +82,8 @@ corollary to his completeness theorem for first-order logic.
     thus merely need to prove that there exists a finite subset $S' \subseteq S$
     such that $S'$ is not satisfiable.
     
-    By lemma \ref{completeness}, if $S$ is consistent then $S$ has a model. So
-    if $S$ has no model then $S$ is inconsistent. For a theory to be
+    By lemma \ref{lem:model_existence}, if $S$ is consistent then $S$ has a
+    model. So if $S$ has no model then $S$ is inconsistent. For a theory to be
     inconsistent is just for it to prove a contradiction---that is, there is
     some wff $\psi$ such that $S \vdash \psi \wedge \neg\psi$. Consider a proof
     witnessing this statement,\footnote{The term `witness' means an object
@@ -150,6 +154,11 @@ proved in 1915 by the German mathematician Leopold Löwenheim. A simpler and mor
 general proof was given in 1920 by the Norwegian logician Thoralf Skolem
 \citep{lowenheim1915, skolem1920}.
 
+\begin{thm}
+    Let $L$ be a countable first-order language and let $T$ be an $L$-theory. If
+    $T$ has any infinite models then $T$ has a countable model.
+\end{thm}
+
 \subsection{Some model theory}
 
 In order to state the theorem in its full generality we need a few definitions
@@ -182,9 +191,8 @@ roughly speaking, how many different formulae it includes.
 \end{dfn}
 
 \begin{lem}
-    Let $L$ be a first-order langauge and let $\kappa$ be the number of
-    non-logical symbols of $L$. Then $|L| = \omega + \kappa =
-    max \left\{ \omega, \kappa \right\}$.
+    Let $L$ be a first-order language and let $\kappa$ be the number of
+    non-logical symbols of $L$. Then $|L| = max \left\{ \omega, \kappa \right\}$.
 \end{lem}
 
 \begin{proof}
@@ -201,8 +209,60 @@ roughly speaking, how many different formulae it includes.
     Suppose we have two signatures, $L^-$ and $L^+$, and that $L^- \subseteq
     L^+$. Then if $A$ is an $L^+$-structure we can transform it into an
     $L^-$-structure by forgetting the symbols of $L^+$ which don't appear in
-    $L^-$. This gives us the \emph{$L^-$-reduct} of $A$, $A| L^-$.
+    $L^-$. This gives us the \emph{$L^-$-reduct} of $A$, $A|L^-$.
 \end{dfn}
+
+\begin{lem}
+    \label{lem:reducts}
+    Let $A$ and $A| L^-$ be as above. Suppose we have a theory $S$ in the
+    language $L^+$ and a theory $T$ in the language $L^-$ such that
+    $T \subseteq S$. Then if $A|L^- \models T$ then $A \models T$; and if
+    $A \models S$ then $A| L^- \models T$.
+\end{lem}
+
+\begin{proof}
+    Exercise.
+\end{proof}
+
+\subsection{The downwards Löwenheim--Skolem theorem}
+
+\begin{thm}
+    Let $L$ be a language of cardinality $\kappa < \lambda$ and let $T$ be an
+    $L$-theory. If $T$ has a model of cardinality $\lambda$ then $T$ also has a
+    model of cardinality $\delta$, with $\kappa \leq \delta < \lambda$.
+\end{thm}
+
+\begin{proof}
+    Take a set of new constant symbols $C = \left\{ c_\alpha : \alpha < \delta
+    \right\}$ which don't appear in $L$, and add them to $L$ to obtain the new
+    language $L' = L \cup C$. We then take $T$ and construct a new theory $T'$
+    by adding new axioms as follows:
+    
+    \begin{equation}
+        T' = T \cup \left\{
+            \text{``$c_\alpha \neq c_\beta$''}
+            :
+            \alpha, \beta < \delta \wedge \alpha \neq \beta
+        \right\}.
+    \end{equation}
+    
+    We now prove that $T'$ is satisfiable. Let $A$ be a model of $T$ with
+    cardinality $\lambda$. From $A$ we obtain a new model $A'$ by adding to it
+    $\delta$ new constants such that $c_\alpha^{A'} \neq c_\beta^{A'}$. We can
+    do this since as $\delta < \lambda$, $\dom(A)$ has a subset of cardinality
+    $\delta$. $A' \models T$ since $A$ is just the $L$-reduct of $A'$, and for
+    all $\alpha, \beta < \delta$ where $\alpha \neq \beta$,
+    $A' \models c_\alpha \neq c_\beta$, so $T'$ is satisfiable.
+    
+    The cardinality of $L'$ is $\delta$, so by lemma \ref{lem:model_existence}
+    $T'$ has a model $B'$ of cardinality $\leq \delta$. But because $B'$
+    satisfies the additional axioms stating that $c_\alpha \neq c_\beta$ where
+    $\alpha \neq \beta$ and $\alpha, \beta < \delta$, $B'$ has cardinality
+    $\geq \delta$. So the cardinality of $B'$ must be $\delta$.
+    
+    Finally let $B$ be the $L$-reduct of $B'$, which by lemma \ref{lem:reducts}
+    is a model of $T$ of cardinality $\delta$.
+\end{proof}
 
 \subsubsection{Extensions and elementarity}
 
@@ -218,8 +278,8 @@ function applied to a tuple, $f\bar{a}$, we mean $\langle f(a_1), \dotsc, f(a_n)
 
 \begin{dfn}
     Suppose $A$ and $B$ are $L$-structures. An \emph{embedding} $f$ from $A$
-    into $B$, $f : A \rightarrow B$, is a function $f$ from $dom(A)$ to $dom(B)$
-    obeying the following conditions.
+    into $B$, $f : A \rightarrow B$, is a function $f$ from $\dom(A)$ to
+    $\dom(B)$ obeying the following conditions.
     
     \begin{enumerate}
         \item $f$ is injective.
@@ -234,10 +294,10 @@ function applied to a tuple, $f\bar{a}$, we mean $\langle f(a_1), \dotsc, f(a_n)
 \end{dfn}
 
 \begin{dfn}
-    Given two $L$-structures $A$ and $B$ such that $dom(A) \subseteq dom(B)$, if
-    the inclusion map $i : dom(A) \rightarrow dom(B)$ is an embedding then we
-    say that $B$ is an \emph{extension} of $A$, or alternatively that $A$ is a
-    \emph{substructure} of $B$, $A \subseteq B$.
+    Given two $L$-structures $A$ and $B$ such that $\dom(A) \subseteq dom(B)$,
+    if the inclusion map $i : \dom(A) \rightarrow \dom(B)$ is an embedding then
+    we say that $B$ is an \emph{extension} of $A$, or alternatively that $A$ is
+    a \emph{substructure} of $B$, $A \subseteq B$.
 \end{dfn}
 
 \begin{dfn}
@@ -297,7 +357,7 @@ uncountable sets.
     $L^*$. Let $S$ be the theory
     
     \begin{displaymath}
-        T \cup \left\{\ c_i \neq c_j\ |\ i, j < \kappa\ \right\}.
+        T \cup \left\{\ c_i \neq c_j : i, j < \kappa\ \right\}.
     \end{displaymath}
     
     Pick an arbitrary finite $U \subseteq S$. Only finitely many of the new
