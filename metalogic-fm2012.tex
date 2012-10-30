@@ -218,9 +218,10 @@ exercises for the reader.
 \subsection{The downwards Löwenheim--Skolem theorem}
 
 \begin{thm}
-    Let $L$ be a language of cardinality $\kappa < \lambda$ and let $T$ be an
-    $L$-theory. If $T$ has a model of cardinality $\lambda$ then $T$ also has a
-    model of cardinality $\delta$, with $\kappa \leq \delta < \lambda$.
+    Let $L$ be a language of cardinality $\kappa < \lambda$ where $\kappa$ is an
+    infinite cardinal, and let $T$ be a theory in the language of $L$. If $T$
+    has a model of cardinality $\lambda$ then it also has a model of cardinality
+    $\delta$, with $\kappa \leq \delta < \lambda$.
 \end{thm}
 
 \begin{proof}
@@ -257,17 +258,17 @@ exercises for the reader.
 
 \subsection{The upwards Löwenheim--Skolem theorem}
 
-One consequence of compactness is what is often called the \emph{upwards
+Another consequence of compactness is what is often called the \emph{upwards
 Löwenheim--Skolem theorem}: given any theory $S$ with an infinite model $A$,
 that theory also has models of every cardinality $\mu > |A|$. The theorem's
 name is somewhat inappropriate since as we shall see, Skolem rejected the
 existence of uncountable sets.
 
 \begin{thm}
-    Let $L$ be a first-order language with $|L| = \kappa$ and let $T$ be an
-    $L$-theory. If $T$ has a model of cardinality $\gamma \geq \kappa$ then for
-    each cardinality $\delta > \gamma$ there exists a model of $T$ with that
-    cardinality.
+    Let $L$ be a first-order language with $|L| = \kappa$ where $\kappa$ is an
+    infinite cardinal, and let $T$ be a theory in the language $L$. If $T$ has a
+    model of cardinality $\gamma \geq \kappa$ then for each cardinality
+    $\delta > \gamma$ there exists a model of $T$ with that cardinality.
 \end{thm}
 
 We omit the proof of this result since we shall prove a more general version
@@ -279,11 +280,11 @@ infinite cardinalities.
 
 If we take the cumulative hierarchy picture at face value then the axioms of ZFC
 appear to describe a structure containing many infinite ordinals and cardinals.
-The Löwenheim--Skolem theorem demonstrates that there are many models of ZFC in
-which the higher reaches of the transfinite do not appear. There are even
-countable models of ZFC. This seems to fly in the face of the assertion---a
-theorem of ZFC---that an uncountable set exists. This phenomenon is known as
-\emph{Skolem's paradox}.
+The Löwenheim--Skolem theorem shows that there are many models of ZFC in which
+the higher reaches of the transfinite do not appear. There are even countable
+models of ZFC. This seems to fly in the face of the assertion---a theorem of
+ZFC---that an uncountable set exists. This phenomenon is known as \emph{Skolem's
+paradox}.
 
 \subsection{Skolem's paradox}
 
